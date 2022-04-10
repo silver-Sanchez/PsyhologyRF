@@ -3,6 +3,9 @@ package com.example.psyhologyrf;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -20,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private TextView sayText;
+    private EditText answerText;
+    private Button buttonSend;
+    //String sayText;
 
 
 
@@ -49,6 +56,31 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+
+
+        sayText = findViewById(R.id.text_home);
+        buttonSend = findViewById(R.id.buttonSend);
+        answerText = findViewById(R.id.answerText);
+
+        SimpleBot simpleBot = new SimpleBot();
+
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+              //  simpleBot.sayInReturn(sayText.getText().toString(), true);
+
+                System.out.println(sayText.getText().toString());
+
+                sayText.setText(simpleBot.sayInReturn(answerText.getText().toString(), true));
+            }
+        });
+
+
+
 
 
 
