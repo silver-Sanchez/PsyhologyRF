@@ -14,6 +14,7 @@ import com.example.psyhologyrf.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
+
     private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -27,6 +28,7 @@ public class HomeFragment extends Fragment {
        /* final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
         return root;
+
     }
 
     @Override

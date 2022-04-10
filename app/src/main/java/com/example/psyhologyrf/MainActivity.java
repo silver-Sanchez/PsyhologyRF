@@ -1,6 +1,7 @@
 package com.example.psyhologyrf;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
@@ -64,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         buttonSend = findViewById(R.id.buttonSend);
         answerText = findViewById(R.id.answerText);
 
-        SimpleBot simpleBot = new SimpleBot();
 
+/*
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,13 +82,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+*/
 
 
 
     }
-
-
+    SimpleBot simpleBot = new SimpleBot();
+    public void saybot(View view){
+        System.out.println(sayText.getText().toString());
+        sayText.setText(simpleBot.sayInReturn(answerText.getText().toString(), true));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
