@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        sayText = findViewById(R.id.text_home);
+        sayText = findViewById(R.id.text_home_ya);
         buttonSend = findViewById(R.id.buttonSend);
         answerText = findViewById(R.id.answerText);
 
