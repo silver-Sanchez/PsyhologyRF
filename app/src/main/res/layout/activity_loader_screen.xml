@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".LoaderScreen">
 
+
     <ImageView
         android:id="@+id/frade"
         android:layout_width="wrap_content"
@@ -46,4 +47,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

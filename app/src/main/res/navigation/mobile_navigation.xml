@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_nav_home_to_nav_gallery"
             app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_nav_home_to_regestration2"
+            app:destination="@id/regestration" />
     </fragment>
 
     <fragment
@@ -42,5 +45,20 @@
         <action
             android:id="@+id/action_nav_slideshow_to_nav_home"
             app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/regestration"
+        android:name="com.example.psyhologyrf.ui.Regestration.Regestration"
+        android:label="fragment_regestration"
+        tools:layout="@layout/fragment_regestration" >
+        <action
+            android:id="@+id/action_regestration2_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_regestration2_to_nav_gallery"
+            app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_regestration2_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
     </fragment>
 </navigation>

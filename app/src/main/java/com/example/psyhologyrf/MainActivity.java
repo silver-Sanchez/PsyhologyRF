@@ -24,10 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private TextView sayText;
-    private EditText answerText;
-    private Button buttonSend;
-    //String sayText;
+
 
 
 
@@ -51,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.regestration)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -60,38 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-        sayText = findViewById(R.id.text_home_ya);
-        buttonSend = findViewById(R.id.buttonSend);
-        answerText = findViewById(R.id.answerText);
-
-
-/*
-        buttonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-              //  simpleBot.sayInReturn(sayText.getText().toString(), true);
-
-                System.out.println(sayText.getText().toString());
-
-                sayText.setText(simpleBot.sayInReturn(answerText.getText().toString(), true));
-            }
-        });
-
-
-
-*/
-
-
-
     }
-    SimpleBot simpleBot = new SimpleBot();
-    public void saybot(View view){
-        System.out.println(sayText.getText().toString());
-        sayText.setText(simpleBot.sayInReturn(answerText.getText().toString(), true));
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
