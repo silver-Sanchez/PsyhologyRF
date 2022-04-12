@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class Regestration extends Fragment {
     private FrameLayout registration_main;
     private Button sendBtnauth;
     private Button login;
+    private ImageView logOut;
     private TextView authText;
     private TextView secondauHello;
     private EditText Passwordauth;
@@ -41,11 +43,7 @@ public class Regestration extends Fragment {
     private ConstraintLayout registration_pole;
     private FirebaseAuth firebaseAuth;
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +61,7 @@ public class Regestration extends Fragment {
         secondauHello  = (TextView) root.findViewById(R.id.secondauHello);
         registration_pole  = (ConstraintLayout) root.findViewById(R.id.registration_pole);
         login  = (Button) root.findViewById(R.id.login);
+        logOut  = (ImageView) root.findViewById(R.id.logOut);
         sendBtnauth  = (Button) root.findViewById(R.id.sendBtnauth);
         Passwordauth  = (EditText) root.findViewById(R.id.Passwordauth);
         Emailauth  = (EditText) root.findViewById(R.id.Emailauth);
@@ -90,7 +89,7 @@ public class Regestration extends Fragment {
 
                         authText.setText("авторизовались");
                         registration_pole.setVisibility(View.GONE);
-                        secondauHello.setText(firebaseAuth.getUid());
+                        secondauHello.setText(firebaseAuth.getCurrentUser().toString());
                        // Toast.makeText(Regestration.this, "", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -102,7 +101,32 @@ public class Regestration extends Fragment {
                 });
             }
         });
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String getEmail = Emailauth.getText().toString();
+                String getPassword = Passwordauth.getText().toString();  //разница только в signInWithEmailAndPassword
+                firebaseAuth.signInWithEmailAndPassword(getEmail, getPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        registration_pole.setVisibility(View.GONE);
+                        secondauHello.setText(firebaseAuth.getUid());
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        authText.setText("не верный логин или пароль");
+                    }
+                });
+            }
+        });
 
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth.signOut();
+            }
+        });
 /*
         final TextView textView = binding.textSlideshow;
         regestrationModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/

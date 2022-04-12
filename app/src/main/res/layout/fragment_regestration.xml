@@ -18,10 +18,10 @@
             android:text="@string/authok"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintHorizontal_bias="0.48"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.060000002"
+            app:layout_constraintVertical_bias="0.55"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -32,6 +32,18 @@
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="177dp"
             tools:layout_editor_absoluteY="85dp" />
+
+
+        <ImageView
+            android:id="@+id/logOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -78,26 +90,25 @@
                 android:id="@+id/sendBtnauth"
                 android:layout_width="156dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="28dp"
-                android:text="Button"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="264dp"
+                android:text="@string/registration"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.075"
+                app:layout_constraintHorizontal_bias="0.117"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Emailauth" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/login"
                 android:layout_width="156dp"
                 android:layout_height="48dp"
-                android:layout_marginEnd="56dp"
-                android:layout_marginBottom="416dp"
+                android:layout_marginTop="264dp"
+                android:layout_marginEnd="32dp"
                 android:text="вход"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/sendBtnauth"
-                app:layout_constraintTop_toBottomOf="@+id/Emailauth"
-                app:layout_constraintVertical_bias="0.965" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/authText"
@@ -113,8 +124,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/sendBtnauth"
                 app:layout_constraintVertical_bias="0.32999998"
                 tools:ignore="MissingConstraints" />
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
