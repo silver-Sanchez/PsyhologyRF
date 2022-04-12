@@ -40,6 +40,7 @@ public class Regestration extends Fragment {
     private TextView secondauHello;
     private EditText Passwordauth;
     private EditText Emailauth;
+    private EditText touName;
     private ConstraintLayout registration_pole;
     private FirebaseAuth firebaseAuth;
 
@@ -64,10 +65,13 @@ public class Regestration extends Fragment {
         logOut  = (ImageView) root.findViewById(R.id.logOut);
         sendBtnauth  = (Button) root.findViewById(R.id.sendBtnauth);
         Passwordauth  = (EditText) root.findViewById(R.id.Passwordauth);
+        touName  = (EditText) root.findViewById(R.id.touName);
         Emailauth  = (EditText) root.findViewById(R.id.Emailauth);
 
         firebaseAuth = FirebaseAuth.getInstance();
         //если пользователь ещё не авторизован
+
+       String name = touName.getText().toString();
 
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null)
@@ -75,6 +79,7 @@ public class Regestration extends Fragment {
         else {
             Snackbar.make(registration_main, "вы авторизовались", Snackbar.LENGTH_SHORT).show();
             registration_pole.setVisibility(View.GONE); // поля регистрации пропадают если пользователь зарегелся
+            secondauHello.setText(name);
 
         }
 
@@ -89,7 +94,8 @@ public class Regestration extends Fragment {
 
                         authText.setText("авторизовались");
                         registration_pole.setVisibility(View.GONE);
-                        secondauHello.setText(firebaseAuth.getCurrentUser().toString());
+                        secondauHello.setText(name);
+                       // secondauHello.setText(firebaseAuth.getCurrentUser().toString());
                        // Toast.makeText(Regestration.this, "", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -125,6 +131,7 @@ public class Regestration extends Fragment {
             @Override
             public void onClick(View v) {
                 firebaseAuth.signOut();
+                registration_pole.setVisibility(View.VISIBLE);
             }
         });
 /*
