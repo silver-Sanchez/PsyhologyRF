@@ -29,9 +29,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/helloo"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="177dp"
-            tools:layout_editor_absoluteY="85dp" />
+            app:layout_constraintBottom_toTopOf="@+id/secondauthText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/registration_pole"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.25"
+            tools:ignore="MissingConstraints" />
 
 
         <ImageView
@@ -41,9 +44,14 @@
             android:src="@android:drawable/ic_delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.92"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.060000002"
             tools:ignore="MissingConstraints" />
+
+
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -54,7 +62,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/white">
+           android:background="@color/white">
 
             <EditText
                 android:id="@+id/touName"
@@ -63,9 +71,10 @@
                 android:layout_marginTop="32dp"
                 android:backgroundTint="@color/black"
                 android:ems="10"
-                android:inputType="text"
                 android:minHeight="48dp"
-                android:text="@string/youName"
+                android:hint="Enter Employee Name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +90,8 @@
                 android:ems="10"
                 android:inputType="textPassword"
                 android:minHeight="48dp"
-                android:text="Password"
+                android:hint="Enter Employee Password"
+                android:importantForAutofill="no"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +107,8 @@
                 android:ems="10"
                 android:inputType="textEmailAddress"
                 android:minHeight="48dp"
-                android:text="Email"
+                android:hint="Enter Employee Email"
+                android:importantForAutofill="no"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
