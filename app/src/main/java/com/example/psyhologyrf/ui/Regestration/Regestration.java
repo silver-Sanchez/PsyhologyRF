@@ -33,6 +33,7 @@ import com.google.firebase.appcheck.FirebaseAppCheck;
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +56,9 @@ public class Regestration extends Fragment {
     private EditText touName;
     private ConstraintLayout registration_pole;
     private FirebaseAuth firebaseAuth;
+    private DataSnapshot dataSnapshot;
 
+    //userId = firebaseAuth.getUid();
     // creating a variable for our
     // Firebase Database.
     FirebaseDatabase firebaseDatabase;
@@ -94,6 +97,7 @@ public class Regestration extends Fragment {
 
 
         firebaseAuth = FirebaseAuth.getInstance();
+       // dataSnapshot = DataSnapshot;
         //если пользователь ещё не авторизован
 
         //firebaseAppCheck
@@ -115,17 +119,16 @@ public class Regestration extends Fragment {
 
 
 
-        if (FirebaseAuth.getInstance().getCurrentUser() == null)
+
+        OnAuthCnow(firebaseAuth);
+
+      /*  if (FirebaseAuth.getInstance().getCurrentUser() == null)
             authText.setText("вы не авторизовались");// фунцция startActivityForResult помогает авторизовать пользов
         else {
             Snackbar.make(registration_main, "вы авторизовались", Snackbar.LENGTH_SHORT).show();
             registration_pole.setVisibility(View.GONE); // поля регистрации пропадают если пользователь зарегелся
-
-
-
-
-
-        }
+           secondauHello.setText("прив" + " " +users.getEmployeeContactNumber());
+        }*/
 
         sendBtnauth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,6 +173,7 @@ public class Regestration extends Fragment {
                 });
             }
         });
+        //для логина
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,9 +224,12 @@ public class Regestration extends Fragment {
                 // data base reference will sends data to firebase.
                 databaseReference.setValue(users);
 
-                // after adding this data we are showing toast message.
-                secondauHello.setText("data added" + databaseReference.get());
-                 Toast.makeText(getContext(), "data added", Toast.LENGTH_SHORT).show();
+                    // after adding this data we are showing toast message.
+                  //  String userName = snapshot.child(USER_KEY).getValue(String.class);
+                  //  secondauHello.setText("data added" + userName);
+                  //  ShowInfo(snapshot);
+                    Toast.makeText(getContext(), "data added", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -235,6 +242,23 @@ public class Regestration extends Fragment {
         });
     }
 
+    public void OnAuthCnow(@NonNull FirebaseAuth firebaseAuth){
+        if (firebaseAuth.getInstance().getCurrentUser() == null)
+            authText.setText("вы не авторизовались");// фунцция startActivityForResult помогает авторизовать пользов
+        else {
+            Snackbar.make(registration_main, "вы авторизовались", Snackbar.LENGTH_SHORT).show();
+            registration_pole.setVisibility(View.GONE); // поля регистрации пропадают если пользователь зарегелся
+            secondauHello.setText("прив" + " " +users.getEmployeeContactNumber());
+
+        }
+    }
+  /*  public void ShowInfo(DataSnapshot dataSnapshot){
+        for(DataSnapshot ds: dataSnapshot.getChildren()){
+            EmployeeInfo info = new EmployeeInfo();
+            info.setEmployeeContactNumber(ds.child(userId).getValue(EmployeeInfo.class).getEmployeeContactNumber());
+           // secondauHello.setText(info.getEmployeeContactNumber());
+        }
+    }*/
     @Override
     public void onDestroyView() {
         super.onDestroyView();
