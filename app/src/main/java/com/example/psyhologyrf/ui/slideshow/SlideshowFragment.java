@@ -97,6 +97,7 @@ public class SlideshowFragment extends Fragment {
 
         // adding on click listener for our button.
         sendDatabtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 

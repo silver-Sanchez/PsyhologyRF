@@ -16,6 +16,9 @@
     <string name="registr">Регистрация и вход</string>
     <string name="freidi">Фрейди</string>
     <string name="youName">Ваше имя</string>
+    <string name="addyouName">Введите ваше имя</string>
+    <string name="addyouPas">Введите пароль</string>
+    <string name="addyouEmail">Введите ваш Email</string>
     <string name="registration">Регистрация</string>
     <string name="auth">Вы ещё не авторизовались</string>
     <string name="authok">Вы зарегестрированы</string>

@@ -57,6 +57,7 @@ public class Regestration extends Fragment {
     private ConstraintLayout registration_pole;
     private FirebaseAuth firebaseAuth;
     private DataSnapshot dataSnapshot;
+    private String userId;
 
     //userId = firebaseAuth.getUid();
     // creating a variable for our
@@ -107,18 +108,13 @@ public class Regestration extends Fragment {
                 SafetyNetAppCheckProviderFactory.getInstance());
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-
-
         // below line is used to get reference for our database.
         databaseReference = firebaseDatabase.getReference("users").push();//запись
+        users = new EmployeeInfo();
 
        // mReference = FirebaseDatabase.getInstance().getReference().child("Quotes"); //чтение
         // initializing our object
         // class variable.
-        users = new EmployeeInfo();
-
-
-
 
         OnAuthCnow(firebaseAuth);
 
@@ -130,40 +126,41 @@ public class Regestration extends Fragment {
            secondauHello.setText("прив" + " " +users.getEmployeeContactNumber());
         }*/
 
-        sendBtnauth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String getEmail = Emailauth.getText().toString();
-                String getPassword = Passwordauth.getText().toString();
-                firebaseAuth.createUserWithEmailAndPassword(getEmail, getPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+
+
+    sendBtnauth.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //  String getEmail = Emailauth.getText().toString();
+            //  String getPassword = Passwordauth.getText().toString();
+            String email = Emailauth.getText().toString();
+            String name = touName.getText().toString();
+            String pass = Passwordauth.getText().toString();
+
+
+
+            if (TextUtils.isEmpty(email) && TextUtils.isEmpty(name) && TextUtils.isEmpty(pass)) {
+                // if the text fields are empty
+                // then show the below message.
+                authText.setText("введите логин и пароль");
+                Toast.makeText(getContext(), "пусто", Toast.LENGTH_SHORT).show();
+
+            } else {
+                firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-
-                        String email = Emailauth.getText().toString();
-                        String name = touName.getText().toString();
-                        String pass = Passwordauth.getText().toString();
-
-                        if (TextUtils.isEmpty(email) && TextUtils.isEmpty(name) && TextUtils.isEmpty(pass)) {
-                            // if the text fields are empty
-                            // then show the below message.
-                            authText.setText("пусто");
-                            Toast.makeText(getContext(), "пусто", Toast.LENGTH_SHORT).show();
-
-                        } else {
-                            // else call the method to add
-                            // data to our database.
-                            //databaseReference.setValue("Hello, World!");
-                            addDatatoFirebase(email, name);
-
-
-
+                        // else call the method to add
+                        // data to our database.
+                        //databaseReference.setValue("Hello, World!");
+                        addDatatoFirebase(email, name);
 
                         authText.setText("авторизовались");
                         registration_pole.setVisibility(View.GONE);
-                        secondauHello.setText("userid");
-                       // secondauHello.setText(firebaseAuth.getCurrentUser().toString());
-                       // Toast.makeText(Regestration.this, "", Toast.LENGTH_SHORT).show();
-                    }}
+                        Toast.makeText(getContext(), "успешно", Toast.LENGTH_SHORT).show();
+                        // secondauHello.setText(firebaseAuth.getCurrentUser().toString());
+                        // Toast.makeText(Regestration.this, "", Toast.LENGTH_SHORT).show();
+
+                    }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
@@ -172,28 +169,40 @@ public class Regestration extends Fragment {
                     }
                 });
             }
-        });
-        //для логина
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String getEmail = Emailauth.getText().toString();
-                String getPassword = Passwordauth.getText().toString();  //разница только в signInWithEmailAndPassword
-                firebaseAuth.signInWithEmailAndPassword(getEmail, getPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        registration_pole.setVisibility(View.GONE);
+        }
+    });
+    //для логина
+            login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String getEmail = Emailauth.getText().toString();
+                    String getPassword = Passwordauth.getText().toString();  //разница только в signInWithEmailAndPassword
 
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        authText.setText("не верный логин или пароль");
-                    }
-                });
-            }
-        });
+                    if (TextUtils.isEmpty(getEmail) && TextUtils.isEmpty(getPassword)) {
+                        // if the text fields are empty
+                        // then show the below message.
+                        authText.setText("введите логин и пароль");
+                        Toast.makeText(getContext(), "пустой ввод", Toast.LENGTH_SHORT).show();
 
+                    } else {
+
+                    firebaseAuth.signInWithEmailAndPassword(getEmail, getPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+
+                            OnAuthCnow(firebaseAuth);
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            authText.setText("не верный логин или пароль");
+                        }
+                    });
+                }
+                }
+
+            });
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,7 +238,7 @@ public class Regestration extends Fragment {
                   //  secondauHello.setText("data added" + userName);
                   //  ShowInfo(snapshot);
                     Toast.makeText(getContext(), "data added", Toast.LENGTH_SHORT).show();
-
+                    ShowInfo(dataSnapshot);
             }
 
             @Override
@@ -248,17 +257,33 @@ public class Regestration extends Fragment {
         else {
             Snackbar.make(registration_main, "вы авторизовались", Snackbar.LENGTH_SHORT).show();
             registration_pole.setVisibility(View.GONE); // поля регистрации пропадают если пользователь зарегелся
-            secondauHello.setText("прив" + " " +users.getEmployeeContactNumber());
+           // secondauHello.setText("прив" + " " + users.getEmployeeContactNumber());
 
+            ShowInfo(dataSnapshot);
         }
     }
-  /*  public void ShowInfo(DataSnapshot dataSnapshot){
-        for(DataSnapshot ds: dataSnapshot.getChildren()){
-            EmployeeInfo info = new EmployeeInfo();
-            info.setEmployeeContactNumber(ds.child(userId).getValue(EmployeeInfo.class).getEmployeeContactNumber());
-           // secondauHello.setText(info.getEmployeeContactNumber());
+    public void ShowInfo(DataSnapshot dataSnapshot){
+
+        try {
+
+        for(DataSnapshot child : dataSnapshot.getChildren()){
+           // EmployeeInfo info = new EmployeeInfo();
+            users.setEmployeeContactNumber(child.child(userId).getValue(EmployeeInfo.class).getEmployeeContactNumber());
+            users.getEmployeeContactNumber();
+            secondauHello.setText("hi" + " " + users.getEmployeeContactNumber());
+
+                }
+        }catch (Exception e){
+          //  secondauHello.setText(firebaseAuth.getInstance().getCurrentUser().getEmail());
+
+          //  System.err.println(dataSnapshot.child(userId).getValue(EmployeeInfo.class).getEmployeeContactNumber());
+
         }
-    }*/
+
+        //secondauHello.setText(dataSnapshot.child("employeeContactNumber").getValue().toString());
+
+
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
