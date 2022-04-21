@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,10 +21,12 @@ import com.example.psyhologyrf.MainActivity;
 import com.example.psyhologyrf.R;
 import com.example.psyhologyrf.databinding.FragmentRegestrationBinding;
 import com.example.psyhologyrf.databinding.FragmentSlideshowBinding;
+import com.example.psyhologyrf.ui.Regestration.Regestration;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.FirebaseAppCheck;
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +41,9 @@ public class SlideshowFragment extends Fragment {
     // EditText and buttons.
     private EditText employeeNameEdt, employeePhoneEdt, employeeAddressEdt;
     private Button sendDatabtn;
-    private TextView textViewrrr;
+    private TextView textViewrrr, textNoRegister;
+    private FirebaseAuth firebaseAuth;
+    private ConstraintLayout slideShow;
     // creating a variable for our
     // Firebase Database.
     FirebaseDatabase firebaseDatabase;
@@ -68,6 +73,8 @@ public class SlideshowFragment extends Fragment {
         employeePhoneEdt  = (EditText) root.findViewById(R.id.idEdtEmployeePhoneNumber);
         employeeAddressEdt  = (EditText) root.findViewById(R.id.idEdtEmployeeAddress);
         textViewrrr  = (TextView) root.findViewById(R.id.textViewrrr);
+        textNoRegister  = (TextView) root.findViewById(R.id.textNoRegister);
+        slideShow  = (ConstraintLayout) root.findViewById(R.id.slideShow);
         sendDatabtn  = (Button) root.findViewById(R.id.idBtnSendData);
         // below line is used to get the
         // instance of our FIrebase database.
@@ -93,6 +100,8 @@ public class SlideshowFragment extends Fragment {
        // employeeInfo = new EmployeeInfo();
 
 
+        Regestration regestration = new Regestration();
+        regestration.OnAuthCnow(firebaseAuth, slideShow, textViewrrr, "вы авторизовались", textNoRegister, "Авторизуйтесь чтобы видеть содержимое");
 
 
         // adding on click listener for our button.

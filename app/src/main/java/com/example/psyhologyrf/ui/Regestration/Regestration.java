@@ -40,25 +40,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class Regestration extends Fragment {
 
     private FragmentRegestrationBinding binding;
 
     private static int  SIGN_IN_CODE = 1;
     private FrameLayout registration_main;
-    private Button sendBtnauth;
-    private Button login;
+    private Button sendBtnauth, login;
     private ImageView logOut;
-    private TextView authText;
-    private TextView secondauHello;
-    private EditText Passwordauth;
-    private EditText Emailauth;
-    private EditText touName;
+    private TextView authText, secondauHello;
+    private EditText Passwordauth, Emailauth, touName;
     private ConstraintLayout registration_pole;
     private FirebaseAuth firebaseAuth;
     private DataSnapshot dataSnapshot;
     private String userId;
-
+    String currentUserID;
     //userId = firebaseAuth.getUid();
     // creating a variable for our
     // Firebase Database.
@@ -81,8 +79,6 @@ public class Regestration extends Fragment {
 
         binding = FragmentRegestrationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-
 
 
         registration_main  = (FrameLayout) root.findViewById(R.id.registration_main);
@@ -109,39 +105,32 @@ public class Regestration extends Fragment {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         // below line is used to get reference for our database.
-        databaseReference = firebaseDatabase.getReference("users").push();//запись
+      //  if (firebaseAuth != null) {
+       //     currentUserID = firebaseAuth.getUid();
+       // }
+        databaseReference = firebaseDatabase.getReference("users"); //запись
+       // databaseReference = firebaseDatabase.getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid())); //запись
+      //  databaseReference = firebaseDatabase.getReference("users").child(firebaseAuth.getInstance().getCurrentUser().getUid()); //запись данных по id user
         users = new EmployeeInfo();
 
-       // mReference = FirebaseDatabase.getInstance().getReference().child("Quotes"); //чтение
-        // initializing our object
-        // class variable.
 
-        OnAuthCnow(firebaseAuth);
 
-      /*  if (FirebaseAuth.getInstance().getCurrentUser() == null)
-            authText.setText("вы не авторизовались");// фунцция startActivityForResult помогает авторизовать пользов
-        else {
-            Snackbar.make(registration_main, "вы авторизовались", Snackbar.LENGTH_SHORT).show();
-            registration_pole.setVisibility(View.GONE); // поля регистрации пропадают если пользователь зарегелся
-           secondauHello.setText("прив" + " " +users.getEmployeeContactNumber());
-        }*/
+        OnAuthCnow(firebaseAuth, registration_pole, secondauHello, "вы авторизовались", authText, "Авторизуйтесь чтобы видеть содержимое"); // если уже зарегестрирован
+
 
 
 
     sendBtnauth.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //  String getEmail = Emailauth.getText().toString();
-            //  String getPassword = Passwordauth.getText().toString();
+
             String email = Emailauth.getText().toString();
             String name = touName.getText().toString();
             String pass = Passwordauth.getText().toString();
 
 
-
             if (TextUtils.isEmpty(email) && TextUtils.isEmpty(name) && TextUtils.isEmpty(pass)) {
                 // if the text fields are empty
-                // then show the below message.
                 authText.setText("введите логин и пароль");
                 Toast.makeText(getContext(), "пусто", Toast.LENGTH_SHORT).show();
 
@@ -149,10 +138,8 @@ public class Regestration extends Fragment {
                 firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        // else call the method to add
-                        // data to our database.
-                        //databaseReference.setValue("Hello, World!");
-                        addDatatoFirebase(email, name);
+
+                        addDatatoFirebase(email, name); // добавляем данные регистрации
 
                         authText.setText("авторизовались");
                         registration_pole.setVisibility(View.GONE);
@@ -190,7 +177,7 @@ public class Regestration extends Fragment {
                         @Override
                         public void onSuccess(AuthResult authResult) {
 
-                            OnAuthCnow(firebaseAuth);
+                            OnAuthCnow(firebaseAuth, registration_pole, secondauHello, "вы авторизовались", authText, "Авторизуйтесь чтобы видеть содержимое");
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -251,38 +238,50 @@ public class Regestration extends Fragment {
         });
     }
 
-    public void OnAuthCnow(@NonNull FirebaseAuth firebaseAuth){
+    public void OnAuthCnow(@NonNull FirebaseAuth firebaseAuth, ConstraintLayout constraintLayout, TextView textView, String text, TextView noautorizet, String textNoauth){
         if (firebaseAuth.getInstance().getCurrentUser() == null)
-            authText.setText("вы не авторизовались");// фунцция startActivityForResult помогает авторизовать пользов
+            noautorizet.setText(textNoauth);// фунцция startActivityForResult помогает авторизовать пользов
         else {
-            Snackbar.make(registration_main, "вы авторизовались", Snackbar.LENGTH_SHORT).show();
-            registration_pole.setVisibility(View.GONE); // поля регистрации пропадают если пользователь зарегелся
+           // Snackbar.make(registration_main, "вы авторизовались", Snackbar.LENGTH_SHORT).show();
+            constraintLayout.setVisibility(View.GONE); // поля регистрации пропадают если пользователь зарегелся
+
+            textView.setText(text);
            // secondauHello.setText("прив" + " " + users.getEmployeeContactNumber());
 
-            ShowInfo(dataSnapshot);
+           // ShowInfo(dataSnapshot);
         }
     }
     public void ShowInfo(DataSnapshot dataSnapshot){
 
-        try {
+       try {
 
-        for(DataSnapshot child : dataSnapshot.getChildren()){
+        for(@NonNull DataSnapshot child : dataSnapshot.getChildren()){
            // EmployeeInfo info = new EmployeeInfo();
-            users.setEmployeeContactNumber(child.child(userId).getValue(EmployeeInfo.class).getEmployeeContactNumber());
+            users.setEmployeeContactNumber(child.child("0EvELNszM9N4F1hPNLq2Vsb2DkS2").getValue(EmployeeInfo.class).getEmployeeContactNumber());
             users.getEmployeeContactNumber();
             secondauHello.setText("hi" + " " + users.getEmployeeContactNumber());
-
-                }
+            dataSnapshot.child("0EvELNszM9N4F1hPNLq2Vsb2DkS2").getValue();
+               }
         }catch (Exception e){
-          //  secondauHello.setText(firebaseAuth.getInstance().getCurrentUser().getEmail());
+         //   secondauHello.setText(firebaseAuth.getInstance().getCurrentUser().getEmail());
 
-          //  System.err.println(dataSnapshot.child(userId).getValue(EmployeeInfo.class).getEmployeeContactNumber());
+            secondauHello.setText(Objects.requireNonNull(firebaseAuth.getUid())); //getUid
+
+
 
         }
-
+/*
         //secondauHello.setText(dataSnapshot.child("employeeContactNumber").getValue().toString());
+        databaseReference.orderByChild("name").equalTo("Alex").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    secondauHello.setText(childDataSnapshot.child("name").getValue().toString());
 
+                }
+            }
+        });*/
     }
     @Override
     public void onDestroyView() {
