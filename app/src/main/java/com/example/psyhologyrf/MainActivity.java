@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+   // private NavigationView nav_view;
 
 
 
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+      //  nav_view  = (NavigationView) binding.getRoot().findViewById(R.id.nav_view);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -61,14 +66,15 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+/*
         Blurry.with(this)
                 .radius(10)
                 .sampling(8)
                 .color(Color.argb(76, 255, 255, 0))
                 .async()
                 .animate(500)
-                .onto(navigationView);
-
+                .onto(nav_view);
+*/
     }
 
 
