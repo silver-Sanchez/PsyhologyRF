@@ -7,6 +7,7 @@
     android:background="@color/blackOnly"
     tools:context=".ui.home.HomeFragment">
 
+
     <TextView
         android:id="@+id/text_home_ya"
         android:layout_width="373dp"
@@ -59,7 +60,51 @@
         app:layout_constraintHorizontal_bias="0.199"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089" />
+        app:layout_constraintVertical_bias="0.089"
+        android:autofillHints="" />
 
 
+    <Button
+        android:id="@+id/privet"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/common_google_signin_btn_text_light_normal"
+        android:text="@string/helloo"
+        android:textColor="@color/blackOnly"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/kakdela"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/kakdela"
+        android:textColor="@color/blackOnly"
+        android:background="@drawable/common_google_signin_btn_text_light_normal"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/privet" />
+
+    <Button
+        android:id="@+id/whoyou"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/common_google_signin_btn_text_light_normal"
+        android:text="@string/whoyou"
+        android:textColor="@color/blackOnly"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/kakdela" />
 </androidx.constraintlayout.widget.ConstraintLayout>
