@@ -24,8 +24,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.psyhologyrf.EmployeeInfo;
 import com.example.psyhologyrf.R;
 import com.example.psyhologyrf.databinding.FragmentRegestrationBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
@@ -38,6 +40,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
@@ -61,7 +64,6 @@ public class Regestration extends Fragment {
     // creating a variable for our
     // Firebase Database.
     FirebaseDatabase firebaseDatabase;
-
     // creating a variable for our Database
     // Reference for Firebase.
     DatabaseReference databaseReference;
@@ -104,11 +106,13 @@ public class Regestration extends Fragment {
                 SafetyNetAppCheckProviderFactory.getInstance());
 
         firebaseDatabase = FirebaseDatabase.getInstance();
+
         // below line is used to get reference for our database.
-      //  if (firebaseAuth != null) {
-       //     currentUserID = firebaseAuth.getUid();
-       // }
-        databaseReference = firebaseDatabase.getReference("users"); //запись
+       // String userIdS = firebaseAuth.getUid();
+
+        // databaseReference = firebaseDatabase.getReference("users"); //.child(Objects.requireNonNull(firebaseAuth.getUid()));
+       //  databaseReference.child(userIdS).push();
+       // databaseReference = firebaseDatabase.getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid())); //запись
        // databaseReference = firebaseDatabase.getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid())); //запись
       //  databaseReference = firebaseDatabase.getReference("users").child(firebaseAuth.getInstance().getCurrentUser().getUid()); //запись данных по id user
         users = new EmployeeInfo();
@@ -116,7 +120,7 @@ public class Regestration extends Fragment {
 
 
         OnAuthCnow(firebaseAuth, registration_pole, secondauHello, "вы авторизовались", authText, "Авторизуйтесь чтобы видеть содержимое"); // если уже зарегестрирован
-
+        ShowInfo(dataSnapshot);
 
 
 
@@ -138,7 +142,7 @@ public class Regestration extends Fragment {
                 firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-
+                        databaseReference = firebaseDatabase.getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid()));
                         addDatatoFirebase(email, name); // добавляем данные регистрации
 
                         authText.setText("авторизовались");
@@ -248,40 +252,30 @@ public class Regestration extends Fragment {
             textView.setText(text);
            // secondauHello.setText("прив" + " " + users.getEmployeeContactNumber());
 
-           // ShowInfo(dataSnapshot);
+            //ShowInfo(dataSnapshot);
         }
     }
     public void ShowInfo(DataSnapshot dataSnapshot){
 
-       try {
-
-        for(@NonNull DataSnapshot child : dataSnapshot.getChildren()){
-           // EmployeeInfo info = new EmployeeInfo();
-            users.setEmployeeContactNumber(child.child("0EvELNszM9N4F1hPNLq2Vsb2DkS2").getValue(EmployeeInfo.class).getEmployeeContactNumber());
-            users.getEmployeeContactNumber();
-            secondauHello.setText("hi" + " " + users.getEmployeeContactNumber());
-            dataSnapshot.child("0EvELNszM9N4F1hPNLq2Vsb2DkS2").getValue();
-               }
-        }catch (Exception e){
-         //   secondauHello.setText(firebaseAuth.getInstance().getCurrentUser().getEmail());
-
-            secondauHello.setText(Objects.requireNonNull(firebaseAuth.getUid())); //getUid
 
 
-
-        }
-/*
-        //secondauHello.setText(dataSnapshot.child("employeeContactNumber").getValue().toString());
-        databaseReference.orderByChild("name").equalTo("Alex").addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseDatabase.getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid())).child("employeeContactNumber").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                    secondauHello.setText(childDataSnapshot.child("name").getValue().toString());
-
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    secondauHello.setText(String.valueOf(task.getResult().getValue()));
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
                 }
             }
-        });*/
+        });
+/*
+       if (firebaseDatabase.getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid())) != null){
+            secondauHello.setText(firebaseDatabase.getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid())).child("employeeContactNumber").getKey().toString());
+        }else{secondauHello.setText("bull");}
+*/
     }
     @Override
     public void onDestroyView() {
