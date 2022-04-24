@@ -32,9 +32,9 @@
             android:id="@+id/secondauHello"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/helloo"
             android:textColor="@color/white"
             android:textStyle="bold"
+            android:textSize="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +42,19 @@
             app:layout_constraintVertical_bias="0.120000005"
             tools:ignore="MissingConstraints" />
 
+        <TextView
+            android:id="@+id/youNamme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.050000012"
+            tools:ignore="MissingConstraints" />
 
         <ImageView
             android:id="@+id/logOut"
@@ -68,7 +81,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-           android:background="@color/blackOnly">
+            android:background="@color/blackOnly">
+
 
             <EditText
                 android:id="@+id/touName"

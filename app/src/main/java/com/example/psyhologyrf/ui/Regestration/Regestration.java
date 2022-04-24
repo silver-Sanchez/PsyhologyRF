@@ -53,7 +53,7 @@ public class Regestration extends Fragment {
     private FrameLayout registration_main;
     private Button sendBtnauth, login;
     private ImageView logOut;
-    private TextView authText, secondauHello;
+    private TextView authText, secondauHello, youNamme;
     private EditText Passwordauth, Emailauth, touName;
     private ConstraintLayout registration_pole;
     private FirebaseAuth firebaseAuth;
@@ -86,6 +86,7 @@ public class Regestration extends Fragment {
         registration_main  = (FrameLayout) root.findViewById(R.id.registration_main);
         authText  = (TextView) root.findViewById(R.id.authText);
         secondauHello  = (TextView) root.findViewById(R.id.secondauHello);
+        youNamme  = (TextView) root.findViewById(R.id.youNamme);
         registration_pole  = (ConstraintLayout) root.findViewById(R.id.registration_pole);
         login  = (Button) root.findViewById(R.id.login);
         logOut  = (ImageView) root.findViewById(R.id.logOut);
@@ -263,10 +264,11 @@ public class Regestration extends Fragment {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
+                    youNamme.setText("привет незнакомец");
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
-                    secondauHello.setText(String.valueOf(task.getResult().getValue()));
+                    youNamme.setText(String.valueOf(task.getResult().getValue()));
                     Log.d("firebase", String.valueOf(task.getResult().getValue()));
                 }
             }
