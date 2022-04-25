@@ -107,7 +107,7 @@ public class Regestration extends Fragment {
                 SafetyNetAppCheckProviderFactory.getInstance());
 
         //firebaseDatabase = FirebaseDatabase.getInstance();
-       // databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        //databaseReference = FirebaseDatabase.getInstance().getReference();
         // below line is used to get reference for our database.
        // String userIdS = firebaseAuth.getUid();
 
@@ -121,7 +121,7 @@ public class Regestration extends Fragment {
 
 
         OnAuthCnow(firebaseAuth, registration_pole, secondauHello, "Приветствую!", authText, "Авторизуйтесь чтобы видеть содержимое"); // если уже зарегестрирован
-      //  ShowInfo(dataSnapshot);
+        //ShowInfo(dataSnapshot);
 
 
 
@@ -216,8 +216,11 @@ public class Regestration extends Fragment {
             public void onClick(View v) {
                 firebaseAuth.signOut();
                 registration_pole.setVisibility(View.VISIBLE);
+              //  databaseReference.removeEventListener(ValueEventListener());
             }
         });
+        ShowInfo(dataSnapshot);
+
 /*
         final TextView textView = binding.textSlideshow;
         regestrationModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
@@ -246,7 +249,7 @@ public class Regestration extends Fragment {
                   //  secondauHello.setText("data added" + userName);
                   //  ShowInfo(snapshot);
                     Toast.makeText(getContext(), "data added", Toast.LENGTH_SHORT).show();
-                   // ShowInfo(dataSnapshot);
+                  //  ShowInfo(dataSnapshot);
             }
 
             @Override
@@ -254,7 +257,7 @@ public class Regestration extends Fragment {
                 // if the data is not added or it is cancelled then
                 // we are displaying a failure toast message.
                 secondauHello.setText("Fail to add data ");
-                Toast.makeText(getContext(), "Fail to add data " + error, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Fail to add data " + error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -270,27 +273,27 @@ public class Regestration extends Fragment {
            // secondauHello.setText("прив" + " " + users.getEmployeeContactNumber());
 
 
-         //  ShowInfo(dataSnapshot);
+
         }
     }
     public void ShowInfo(DataSnapshot dataSnapshot){
-
-
-
-        databaseReference.child(Objects.requireNonNull(firebaseAuth.getUid())).child("employeeContactNumber").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    youNamme.setText("привет незнакомец");
-                    Log.e("firebase", "Error getting data", task.getException());
+        if (firebaseAuth.getInstance().getCurrentUser() == null) {
+            Log.e("firebase", "Error getting data NULL");
+        }else {
+            // databaseReference = FirebaseDatabase.getInstance().getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid()))
+            FirebaseDatabase.getInstance().getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid())).child("employeeContactNumber").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        youNamme.setText("привет незнакомец");
+                        Log.e("firebase", "Error getting data", task.getException());
+                    } else {
+                        youNamme.setText(String.valueOf(task.getResult().getValue()));
+                        Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    }
                 }
-                else {
-                    youNamme.setText(String.valueOf(task.getResult().getValue()));
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                }
-            }
-        });
-
+            });
+        }
 
 
     }
