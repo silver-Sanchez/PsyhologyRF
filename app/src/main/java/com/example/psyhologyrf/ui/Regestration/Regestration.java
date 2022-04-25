@@ -63,7 +63,7 @@ public class Regestration extends Fragment {
     //userId = firebaseAuth.getUid();
     // creating a variable for our
     // Firebase Database.
-    FirebaseDatabase firebaseDatabase;
+    //FirebaseDatabase firebaseDatabase;
     // creating a variable for our Database
     // Reference for Firebase.
     DatabaseReference databaseReference;
@@ -106,8 +106,8 @@ public class Regestration extends Fragment {
         firebaseAppCheck.installAppCheckProviderFactory(
                 SafetyNetAppCheckProviderFactory.getInstance());
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-
+        //firebaseDatabase = FirebaseDatabase.getInstance();
+       // databaseReference = FirebaseDatabase.getInstance().getReference("users");
         // below line is used to get reference for our database.
        // String userIdS = firebaseAuth.getUid();
 
@@ -120,8 +120,8 @@ public class Regestration extends Fragment {
 
 
 
-        OnAuthCnow(firebaseAuth, registration_pole, secondauHello, "вы авторизовались", authText, "Авторизуйтесь чтобы видеть содержимое"); // если уже зарегестрирован
-        ShowInfo(dataSnapshot);
+        OnAuthCnow(firebaseAuth, registration_pole, secondauHello, "Приветствую!", authText, "Авторизуйтесь чтобы видеть содержимое"); // если уже зарегестрирован
+      //  ShowInfo(dataSnapshot);
 
 
 
@@ -134,30 +134,41 @@ public class Regestration extends Fragment {
             String pass = Passwordauth.getText().toString();
 
 
-            if (TextUtils.isEmpty(email) && TextUtils.isEmpty(name) && TextUtils.isEmpty(pass)) {
-                // if the text fields are empty
-                authText.setText("введите логин и пароль");
-                Toast.makeText(getContext(), "пусто", Toast.LENGTH_SHORT).show();
 
-            } else {
+            if (TextUtils.isEmpty(email)) {
+                // if the text fields are empty
+                authText.setText("введите логин имя и пароль");
+                Toast.makeText(getContext(), "заполните email", Toast.LENGTH_SHORT).show();
+            }
+                else if (TextUtils.isEmpty(name)){
+                    authText.setText("введите логин имя и пароль");
+                    Toast.makeText(getContext(), "заполните  имя", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(pass)){
+                    authText.setText("введите логин имя и пароль");
+                    Toast.makeText(getContext(), "заполните пароль", Toast.LENGTH_SHORT).show();}
+             else {
                 firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        databaseReference = firebaseDatabase.getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid()));
+
+                        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid())); // добавляем в базу по id авторизации
+
                         addDatatoFirebase(email, name); // добавляем данные регистрации
 
-                        authText.setText("авторизовались");
+                        authText.setText("вы успешно авторизовались");
                         registration_pole.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "успешно", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "вы успешно авторизовались", Toast.LENGTH_SHORT).show();
                         // secondauHello.setText(firebaseAuth.getCurrentUser().toString());
                         // Toast.makeText(Regestration.this, "", Toast.LENGTH_SHORT).show();
+
+
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
-                        authText.setText("ошибка");
+                        Toast.makeText(getContext(), "возможно такой пользователь уже существует", Toast.LENGTH_SHORT).show();
+                        authText.setText("возможно такой пользователь уже существует");
                     }
                 });
             }
@@ -170,25 +181,30 @@ public class Regestration extends Fragment {
                     String getEmail = Emailauth.getText().toString();
                     String getPassword = Passwordauth.getText().toString();  //разница только в signInWithEmailAndPassword
 
-                    if (TextUtils.isEmpty(getEmail) && TextUtils.isEmpty(getPassword)) {
+                    if (TextUtils.isEmpty(getEmail)) {
                         // if the text fields are empty
                         // then show the below message.
                         authText.setText("введите логин и пароль");
-                        Toast.makeText(getContext(), "пустой ввод", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "заполните email", Toast.LENGTH_SHORT).show();
 
-                    } else {
+                    }else if (TextUtils.isEmpty(getPassword)){
+                        authText.setText("введите логин и пароль");
+                        Toast.makeText(getContext(), "заполните пароль", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
 
                     firebaseAuth.signInWithEmailAndPassword(getEmail, getPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
 
-                            OnAuthCnow(firebaseAuth, registration_pole, secondauHello, "вы авторизовались", authText, "Авторизуйтесь чтобы видеть содержимое");
+                            OnAuthCnow(firebaseAuth, registration_pole, secondauHello, "Приветствую", authText, "Авторизуйтесь чтобы видеть содержимое");
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            authText.setText("не верный логин или пароль");
+                            Toast.makeText(getContext(), "не верный логин или пароль", Toast.LENGTH_SHORT).show();
+                             authText.setText("не верный логин или пароль");
                         }
                     });
                 }
@@ -230,7 +246,7 @@ public class Regestration extends Fragment {
                   //  secondauHello.setText("data added" + userName);
                   //  ShowInfo(snapshot);
                     Toast.makeText(getContext(), "data added", Toast.LENGTH_SHORT).show();
-                    ShowInfo(dataSnapshot);
+                   // ShowInfo(dataSnapshot);
             }
 
             @Override
@@ -253,14 +269,15 @@ public class Regestration extends Fragment {
             textView.setText(text);
            // secondauHello.setText("прив" + " " + users.getEmployeeContactNumber());
 
-            //ShowInfo(dataSnapshot);
+
+         //  ShowInfo(dataSnapshot);
         }
     }
     public void ShowInfo(DataSnapshot dataSnapshot){
 
 
 
-        firebaseDatabase.getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid())).child("employeeContactNumber").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseReference.child(Objects.requireNonNull(firebaseAuth.getUid())).child("employeeContactNumber").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -273,11 +290,9 @@ public class Regestration extends Fragment {
                 }
             }
         });
-/*
-       if (firebaseDatabase.getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid())) != null){
-            secondauHello.setText(firebaseDatabase.getReference("users").child(Objects.requireNonNull(firebaseAuth.getUid())).child("employeeContactNumber").getKey().toString());
-        }else{secondauHello.setText("bull");}
-*/
+
+
+
     }
     @Override
     public void onDestroyView() {

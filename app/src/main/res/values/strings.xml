@@ -24,6 +24,10 @@
     <string name="authok">Вы зарегестрированы</string>
     <string name="kakdela">Как дела?</string>
     <string name="whoyou">кто ты?</string>
+    <string name="whatSkill">что умеешь?</string>
+    <string name="load">загрузка данных...</string>
+    <string name="welcome">Добро пожаловать</string>
+    <string name="hellothree">Приветствую</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
