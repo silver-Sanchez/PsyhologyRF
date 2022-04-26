@@ -1,7 +1,5 @@
 package com.example.psyhologyrf.ui.Regestration;
 
-import android.content.ClipData;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,19 +25,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.FirebaseAppCheck;
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
@@ -161,8 +154,6 @@ public class Regestration extends Fragment {
                         // secondauHello.setText(firebaseAuth.getCurrentUser().toString());
                         // Toast.makeText(Regestration.this, "", Toast.LENGTH_SHORT).show();
 
-
-
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -219,7 +210,13 @@ public class Regestration extends Fragment {
               //  databaseReference.removeEventListener(ValueEventListener());
             }
         });
-        ShowInfo(dataSnapshot);
+        ShowInfo(new MyCallback() {
+            @Override
+            public void onCallback(String value) {
+                youNamme.setText(value);
+            }
+        });
+        //ShowInfo(dataSnapshot);
 
 /*
         final TextView textView = binding.textSlideshow;
@@ -249,7 +246,13 @@ public class Regestration extends Fragment {
                   //  secondauHello.setText("data added" + userName);
                   //  ShowInfo(snapshot);
                     Toast.makeText(getContext(), "data added", Toast.LENGTH_SHORT).show();
-                  //  ShowInfo(dataSnapshot);
+                   // ShowInfo(dataSnapshot);
+                ShowInfo(new MyCallback() {
+                    @Override
+                    public void onCallback(String value) {
+                        youNamme.setText(value);
+                    }
+                });
             }
 
             @Override
@@ -276,7 +279,11 @@ public class Regestration extends Fragment {
 
         }
     }
-    public void ShowInfo(DataSnapshot dataSnapshot){
+    public interface MyCallback { //нужно для извлечения значения так как task не может быть возвращаемой
+        void onCallback(String value);
+        // возвращаем значение из ShowInfo
+    }
+    public void ShowInfo(MyCallback myCallback){
         if (firebaseAuth.getInstance().getCurrentUser() == null) {
             Log.e("firebase", "Error getting data NULL");
         }else {
@@ -285,18 +292,25 @@ public class Regestration extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                     if (!task.isSuccessful()) {
-                        youNamme.setText("привет незнакомец");
+                        //youNamme.setText("привет незнакомец");
                         Log.e("firebase", "Error getting data", task.getException());
+                        myCallback.onCallback("привет незнакомец");
+                      String.valueOf(task.getException());
                     } else {
-                        youNamme.setText(String.valueOf(task.getResult().getValue()));
+                       // youNamme.setText(String.valueOf(task.getResult().getValue()));
+                       // users.setEmployeeContactNumber(String.valueOf(task.getResult().getValue()));
+                       // youNamme.setText(users.getEmployeeContactNumber());
+                       // String.valueOf(task.getResult().getValue());
                         Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                        myCallback.onCallback(String.valueOf(task.getResult().getValue()));
+
                     }
                 }
             });
         }
 
-
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

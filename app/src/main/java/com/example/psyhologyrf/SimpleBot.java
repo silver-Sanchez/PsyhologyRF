@@ -1,17 +1,10 @@
 package com.example.psyhologyrf;
-
-import static androidx.core.content.ContextCompat.startActivity;
-
-import android.content.Intent;
-
-import com.example.psyhologyrf.ui.gallery.GalleryFragment;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Random;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 
@@ -83,8 +76,8 @@ public class SimpleBot {
             this.put("whatdoyoudoing", "Я пробую общаться с людьми!.");
             this.put("whatdoyoulike", "Мне нравиться думать что я не просто программа.");
             this.put("iamfeelling", "Как давно это началось? Расскажите чуть подробнее.");
-            this.put("yes", "Согласие есть продукт при полном непротивлении сторонс эр!.");
-            this.put("bye", "До свидания. Надеюсь, ещё увидимся сэр!. ☻");
+            this.put("yes", "Согласие есть продукт при полном непротивлении сторонс !.");
+            this.put("bye", "До свидания. Надеюсь, ещё увидимся !. ☻");
             this.put("scill", "сэр,я могу рассказать анекдот, подсказать время или просто поговорить ☆.");
             this.put("anecdot", "я пошутил, я не знаю анекдотов ☺.");
             this.put("depression", "я могу вам с этим помочь, давайте начнём общение.");
@@ -93,7 +86,6 @@ public class SimpleBot {
     Pattern pattern;
     Random random = new Random();
     Date date = new Date();
-
 
     public String sayInReturn(String msg, boolean ai) {
         String say = msg.trim().endsWith("?") ? this.ELUSIVE_ANSWERS[this.random.nextInt(this.ELUSIVE_ANSWERS.length)] : this.COMMON_PHRASES[this.random.nextInt(this.COMMON_PHRASES.length)];
