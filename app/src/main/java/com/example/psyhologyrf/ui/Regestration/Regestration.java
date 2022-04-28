@@ -1,5 +1,7 @@
 package com.example.psyhologyrf.ui.Regestration;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -61,9 +63,15 @@ public class Regestration extends Fragment {
     // Reference for Firebase.
     DatabaseReference databaseReference;
 
+    public static final String APP_PREFERENCES = "mysettings";// это будет именем файла настроек
+    public static final String APP_PREFERENCES_NAME = "Nickname"; // Далее нужно создать параметры, которые вы хотите сохранять в настройках
+    public static final String APP_PREFERENCES_AGE = "Age"; // возраст кота
+
     // creating a variable for
     // our object class
     EmployeeInfo users;
+
+    SharedPreferences mSettings; //сохранять любые значения
 
     private String USER_KEY = "employeeContactNumber";
 
@@ -75,6 +83,7 @@ public class Regestration extends Fragment {
         binding = FragmentRegestrationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        mSettings = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         registration_main  = (FrameLayout) root.findViewById(R.id.registration_main);
         authText  = (TextView) root.findViewById(R.id.authText);
@@ -127,6 +136,13 @@ public class Regestration extends Fragment {
             String pass = Passwordauth.getText().toString();
 
 
+
+            //Чтение значений параметров
+            //Получив нужный текст, сохраняем его через метод putString()
+            SharedPreferences.Editor editor = mSettings.edit();
+            editor.putString(APP_PREFERENCES_NAME, name); // ключь APP_PREFERENCES_NAME из поля name
+            editor.apply();
+            ///////////////////////////////////////////////////////////////////
 
             if (TextUtils.isEmpty(email)) {
                 // if the text fields are empty
@@ -210,17 +226,22 @@ public class Regestration extends Fragment {
               //  databaseReference.removeEventListener(ValueEventListener());
             }
         });
-        ShowInfo(new MyCallback() {
+
+        //загружаем с локального устройства
+        if(mSettings.contains(APP_PREFERENCES_NAME)) {
+            youNamme.setText(mSettings.getString(APP_PREFERENCES_NAME, ""));
+        }else {youNamme.setText("нет данных");}
+
+
+        /////// если раскоментировать код ниже, будет подгружать из базы firebase
+      /*  ShowInfo(new MyCallback() {
             @Override
             public void onCallback(String value) {
                 youNamme.setText(value);
             }
-        });
-        //ShowInfo(dataSnapshot);
+        });*/
 
-/*
-        final TextView textView = binding.textSlideshow;
-        regestrationModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
+
         return root;
     }
 
@@ -247,12 +268,22 @@ public class Regestration extends Fragment {
                   //  ShowInfo(snapshot);
                     Toast.makeText(getContext(), "data added", Toast.LENGTH_SHORT).show();
                    // ShowInfo(dataSnapshot);
-                ShowInfo(new MyCallback() {
+
+
+                /////// если раскоментировать код ниже, будет подгружать из базы firebase
+               /* ShowInfo(new MyCallback() {
                     @Override
                     public void onCallback(String value) {
                         youNamme.setText(value);
                     }
-                });
+                });*/
+                ///////////////
+
+                /////// подгружает с локального устройства
+                if(mSettings.contains(APP_PREFERENCES_NAME)) {
+                    youNamme.setText(mSettings.getString(APP_PREFERENCES_NAME, ""));
+                }else {youNamme.setText("загружаю...");}
+                ////////
             }
 
             @Override

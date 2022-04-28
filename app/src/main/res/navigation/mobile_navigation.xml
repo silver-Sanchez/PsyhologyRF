@@ -49,7 +49,7 @@
     <fragment
         android:id="@+id/regestration"
         android:name="com.example.psyhologyrf.ui.Regestration.Regestration"
-        android:label="fragment_regestration"
+        android:label="@string/helloo"
         tools:layout="@layout/fragment_regestration" >
         <action
             android:id="@+id/action_regestration2_to_nav_home"
