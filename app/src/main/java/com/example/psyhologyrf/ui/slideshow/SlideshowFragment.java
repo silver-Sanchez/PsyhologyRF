@@ -22,6 +22,7 @@ import com.example.psyhologyrf.R;
 import com.example.psyhologyrf.databinding.FragmentRegestrationBinding;
 import com.example.psyhologyrf.databinding.FragmentSlideshowBinding;
 import com.example.psyhologyrf.ui.Regestration.Regestration;
+import com.example.psyhologyrf.ui.SayWhithTime;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.FirebaseAppCheck;
@@ -42,7 +43,7 @@ public class SlideshowFragment extends Fragment {
 
     private TextView textViewrrr, textNoRegister;
     private FirebaseAuth firebaseAuth;
-    private ConstraintLayout slideShow;
+    private ConstraintLayout slideShow, inLoginconstraint;
     // creating a variable for our
     // Firebase Database.
     FirebaseDatabase firebaseDatabase;
@@ -53,7 +54,7 @@ public class SlideshowFragment extends Fragment {
 
     // creating a variable for
     // our object class
-
+    SayWhithTime sayWhithTime = new SayWhithTime();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +63,8 @@ public class SlideshowFragment extends Fragment {
 
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+
 /*
         final TextView textView = binding.textSlideshow;
         slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
@@ -71,7 +74,10 @@ public class SlideshowFragment extends Fragment {
         textViewrrr  = (TextView) root.findViewById(R.id.textViewrrr);
         textNoRegister  = (TextView) root.findViewById(R.id.textNoRegister);
         slideShow  = (ConstraintLayout) root.findViewById(R.id.slideShow);
+        inLoginconstraint  = (ConstraintLayout) root.findViewById(R.id.inLoginconstraint);
 
+        sayWhithTime.SetcolorWithCurrentTime(slideShow);
+        sayWhithTime.SetcolorWithCurrentTime(inLoginconstraint);
         // below line is used to get the
         // instance of our FIrebase database.
 

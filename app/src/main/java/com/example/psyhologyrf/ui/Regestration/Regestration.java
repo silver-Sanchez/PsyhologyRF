@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.psyhologyrf.EmployeeInfo;
 import com.example.psyhologyrf.R;
 import com.example.psyhologyrf.databinding.FragmentRegestrationBinding;
+import com.example.psyhologyrf.ui.SayWhithTime;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,6 +52,7 @@ public class Regestration extends Fragment {
     private TextView authText, secondauHello, youNamme;
     private EditText Passwordauth, Emailauth, touName;
     private ConstraintLayout registration_pole;
+    private ConstraintLayout inauthlayer;
     private FirebaseAuth firebaseAuth;
     private DataSnapshot dataSnapshot;
     private String userId;
@@ -74,6 +76,7 @@ public class Regestration extends Fragment {
     SharedPreferences mSettings; //сохранять любые значения
 
     private String USER_KEY = "employeeContactNumber";
+    SayWhithTime sayWhithTime = new SayWhithTime();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -90,6 +93,7 @@ public class Regestration extends Fragment {
         secondauHello  = (TextView) root.findViewById(R.id.secondauHello);
         youNamme  = (TextView) root.findViewById(R.id.youNamme);
         registration_pole  = (ConstraintLayout) root.findViewById(R.id.registration_pole);
+        inauthlayer  = (ConstraintLayout) root.findViewById(R.id.inauthlayer);
         login  = (Button) root.findViewById(R.id.login);
         logOut  = (ImageView) root.findViewById(R.id.logOut);
         sendBtnauth  = (Button) root.findViewById(R.id.sendBtnauth);
@@ -97,7 +101,8 @@ public class Regestration extends Fragment {
         touName  = (EditText) root.findViewById(R.id.touName);
         Emailauth  = (EditText) root.findViewById(R.id.Emailauth);
 
-
+        sayWhithTime.SetcolorWithCurrentTime(inauthlayer);
+        sayWhithTime.SetcolorWithCurrentTime(registration_pole);
         firebaseAuth = FirebaseAuth.getInstance();
        // dataSnapshot = DataSnapshot;
         //если пользователь ещё не авторизован

@@ -1,4 +1,5 @@
 package com.example.psyhologyrf;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -86,6 +87,8 @@ public class SimpleBot {
     Pattern pattern;
     Random random = new Random();
     Date date = new Date();
+    SimpleDateFormat formatter = new SimpleDateFormat("hh:mm");
+    String message = formatter.format(date);
 
     public String sayInReturn(String msg, boolean ai) {
         String say = msg.trim().endsWith("?") ? this.ELUSIVE_ANSWERS[this.random.nextInt(this.ELUSIVE_ANSWERS.length)] : this.COMMON_PHRASES[this.random.nextInt(this.COMMON_PHRASES.length)];
@@ -98,7 +101,7 @@ public class SimpleBot {
                 this.pattern = Pattern.compile((String)o.getKey());
                 if (this.pattern.matcher(message).find()) {
                     if (((String)o.getValue()).equals("whattime")) {
-                        return this.date.toString();
+                        return this.message;
                     }
 
                     return (String)this.ANSWERS_BY_PATTERNS.get(o.getValue());
