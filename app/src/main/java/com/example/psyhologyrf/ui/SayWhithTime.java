@@ -11,20 +11,18 @@ public class SayWhithTime {
 
     public String CurrentTime(){
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("hh.mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH.MM");
         String message = formatter.format(date);
         double discount = Double.parseDouble(message);
         System.out.println(discount);
 
-        if (discount >  06.00){
+        if (discount >  6.00 && discount < 12.00){
             return  "доброе утро";
-        } else if (discount >  12.00){
+        } else if (discount >  12.00  && discount < 18.00){
             return  "Добрый день";
-        } else if (discount >  18.00){
+        } else if (discount >  18.00 && discount < 23.00){
             return "Добрый вечер";
-        } else if (discount >  23.00){
-            return "Доброй ночи";
-        } else {return "здравствуйте";}
+        } else { return "Доброй ночи";}
 
 
 
