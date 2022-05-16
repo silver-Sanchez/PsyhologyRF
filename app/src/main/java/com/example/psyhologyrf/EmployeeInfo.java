@@ -10,6 +10,8 @@ public class EmployeeInfo {
     // employee contact number
     private String employeeContactNumber;
 
+    private int employeePersColor;
+
     // string variable for storing
     // employee address.
     private String employeeAddress;
@@ -37,6 +39,14 @@ public class EmployeeInfo {
 
     public void setEmployeeContactNumber(String employeeContactNumber) {
         this.employeeContactNumber = employeeContactNumber;
+    }
+
+    public int getEmployeePersColor() {
+        return employeePersColor;
+    }
+
+    public void setEmployeePersColor(int employeePersColor) {
+        this.employeePersColor = employeePersColor;
     }
 
     public String getEmployeeAddress() {
