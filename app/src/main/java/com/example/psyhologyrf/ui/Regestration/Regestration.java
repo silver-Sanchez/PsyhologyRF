@@ -235,7 +235,17 @@ public class Regestration extends Fragment {
         //загружаем с локального устройства
         if(mSettings.contains(APP_PREFERENCES_NAME)) {
             youNamme.setText(mSettings.getString(APP_PREFERENCES_NAME, ""));
-        }else {youNamme.setText("нет данных");}
+        }else {ShowInfo(new MyCallback() {
+            @Override
+            public void onCallback(String value) {
+                youNamme.setText(value);
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString(APP_PREFERENCES_NAME, value); // ключь APP_PREFERENCES_NAME из поля value
+                editor.apply();
+            }
+        });
+
+             }
 
 
         /////// если раскоментировать код ниже, будет подгружать из базы firebase
@@ -287,7 +297,16 @@ public class Regestration extends Fragment {
                 /////// подгружает с локального устройства
                 if(mSettings.contains(APP_PREFERENCES_NAME)) {
                     youNamme.setText(mSettings.getString(APP_PREFERENCES_NAME, ""));
-                }else {youNamme.setText("загружаю...");}
+                }else {ShowInfo(new MyCallback() {
+                    @Override
+                    public void onCallback(String value) {
+                        youNamme.setText(value);
+                        SharedPreferences.Editor editor = mSettings.edit();
+                        editor.putString(APP_PREFERENCES_NAME, value); // ключь APP_PREFERENCES_NAME из поля value
+                        editor.apply();
+                    }
+                });
+                }
                 ////////
             }
 
