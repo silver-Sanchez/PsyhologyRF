@@ -90,26 +90,6 @@ public class HomeFragment extends Fragment {
 
 
 
-
-      /*  privet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                answerText.setText(R.string.helloo);
-                sayText.setText(simpleBot.sayInReturn(answerText.getText().toString(), true));
-            }
-        });*/
-
-
-/*
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String name = preferences.getString("Name", Mytitle);
-        if(!name.equalsIgnoreCase(Mytitle))  //не вышло
-        {
-            name = name + Mytitle;
-            answerText.setText(name);
-        }
-*/
-
         return root;
 
     }

@@ -1,19 +1,21 @@
 package com.example.psyhologyrf.ui.gallery;
 
+import android.provider.ContactsContract;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class GalleryViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<String> myweb;
 
     public GalleryViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        myweb = new MutableLiveData<>();
+     //   myweb.setValue("This is gallery fragment");
     }
 
     public LiveData<String> getText() {
-        return mText;
+        return myweb;
     }
 }

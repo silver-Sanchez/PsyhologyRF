@@ -11,13 +11,16 @@
 
     <TextView
         android:id="@+id/text_home_ya"
-        android:layout_width="373dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="?android:attr/fastScrollPreviewBackgroundLeft"
         android:backgroundTint="@color/whiteGray"
-        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
         android:text="@string/hellooSmile"
         android:textAlignment="center"
         android:textColor="@color/blackOnly"
@@ -28,61 +31,58 @@
         app:layout_constraintHorizontal_bias="0.636"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.247" />
+        app:layout_constraintVertical_bias="0.16000003" />
 
 
     <Button
         android:id="@+id/buttonSend"
-        android:layout_width="104dp"
+        android:layout_width="wrap_content"
         android:layout_height="49dp"
-        android:layout_marginStart="264dp"
-        android:layout_marginEnd="43dp"
+        android:layout_marginEnd="42dp"
         android:backgroundTint="@color/whiteGray"
         android:onClick="saybot"
         android:text="@string/question"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089" />
+        app:layout_constraintVertical_bias="0.042" />
 
     <EditText
         android:id="@+id/answerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:autofillHints=""
+        android:backgroundTint="@color/white"
         android:ems="10"
+        android:hint="@string/helloo"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:hint="@string/helloo"
+        android:text=""
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:backgroundTint="@color/white"
-        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.199"
+        app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089"
-        android:autofillHints="" />
-
+        app:layout_constraintVertical_bias="0.042" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recuclebuttom"
-        android:layout_width="match_parent"
-        android:layout_height="178dp"
+        android:layout_width="414dp"
+        android:layout_height="117dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.971"
+        app:layout_constraintVertical_bias="0.895"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="-2dp" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:paddingLeft="20dp"
         android:src="@drawable/iconfrade"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_home_ya"
