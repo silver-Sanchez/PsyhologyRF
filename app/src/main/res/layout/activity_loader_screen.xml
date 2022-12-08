@@ -4,34 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blackOnly"
+    android:background="@color/white"
     android:id="@+id/loaderscreen"
     tools:context=".LoaderScreen">
 
 
     <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/pb_horizontal"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="259dp"
+        android:layout_height="38dp"
+        android:layout_centerInParent="true"
+        android:max="100"
+        android:min="0"
+        android:progress="0"
+        android:progressDrawable="@drawable/custom_progressbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48" />
+        app:layout_constraintVertical_bias="0.865" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="189dp"
+        android:layout_height="190dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.272"
-        app:srcCompat="@drawable/ic_nadpis_04_01" />
+        app:layout_constraintVertical_bias="0.556"
+        app:srcCompat="@drawable/ptn_5" />
+
+    <TextView
+        android:id="@+id/online"
+        android:layout_width="306dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="500dp"
+        android:fontFamily="@font/andika_new_basic"
+        android:text="психолог онлайн"
+        android:textAlignment="center"
+        android:textColor="@color/blackOnly"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/youPersonal"
+        android:layout_width="208dp"
+        android:layout_height="71dp"
+        android:layout_marginBottom="536dp"
+        android:fontFamily="@font/andika_new_basic"
+        android:text="Ваш личный"
+        android:textAlignment="center"
+        android:textColor="@color/blackOnly"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,8 +26,7 @@ import com.example.psyhologyrf.ui.SayWhithTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
-
+public class HomeFragment extends Fragment implements OnCategoryClickCallback {
 
 
     private FragmentHomeBinding binding;
@@ -36,13 +36,14 @@ public class HomeFragment extends Fragment {
     private Button buttonSend;
     private ConstraintLayout glavcolor;
     private RecyclerView recuclebuttom;
+    private HomeViewModel mHomeViewModel;
     SimpleBot simpleBot = new SimpleBot();
     SayWhithTime sayWhithTime = new SayWhithTime();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
+        mHomeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -94,13 +95,26 @@ public class HomeFragment extends Fragment {
 
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //Подписываемся на изменения LiveData во вьюмодели. Когда текст в LiveData изменится, он будет вписан в EditText
+        mHomeViewModel.getText().observe(getViewLifecycleOwner(), s -> {
+            answerText.setText(s);
+            sayText.setText(simpleBot.sayInReturn(answerText.getText().toString(), true));
+
+        });
+    }
 
     public void setCategoryRecycle(List<ModelButtom> categoryList) {
         //чтобы элементы были друг за другом
         androidx.recyclerview.widget.RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
         // RecyclerView.HORIZONTAL - значит прокрутка по горизонтали
         recuclebuttom.setLayoutManager(layoutManager);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(getContext(), categoryList);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(
+                getContext(),
+                categoryList,
+                this);
         recuclebuttom.setAdapter(categoryAdapter);
 
     }
@@ -114,4 +128,9 @@ public class HomeFragment extends Fragment {
     }
 
 
+// Обрабатываем callback с новым текстом. Отправляем его в LiveData во вьюмодели экрана
+    @Override
+    public void onCategoryClicked(String text) {
+        mHomeViewModel.setText(text);
+    }
 }

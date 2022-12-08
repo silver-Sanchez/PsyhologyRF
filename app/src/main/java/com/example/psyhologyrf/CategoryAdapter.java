@@ -14,20 +14,23 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psyhologyrf.ui.home.HomeFragment;
+import com.example.psyhologyrf.ui.home.OnCategoryClickCallback;
 
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.categoryVew> {
     Context context;   // контекс что должно бытьна странице
     List<ModelButtom> category;  // список элементов
-    private EditText answerText;
-   // private TextView sayText;
+    private OnCategoryClickCallback mCallback;
+    // private EditText answerText;
+    // private TextView sayText;
 
 
-    public CategoryAdapter(Context context, List<ModelButtom> category) {
+    public CategoryAdapter(Context context, List<ModelButtom> category, OnCategoryClickCallback callback) {
         // Назначаем переданные данные локальным переменным
         this.context = context; // context
         this.category = category; // Данные класса сущности ArrayList
+        mCallback = callback;
         // Данные класса сущности ArrayList
 
 
@@ -41,10 +44,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.catego
     Другими словами, он принимает XML-файл в качестве входных данных и создает из него объекты представления.*/
 
         // create a new view
-        View categoryItems  = LayoutInflater.from(parent.getContext()).inflate(R.layout.buttomactiv, null);// дизайн можно скопировать
+        View categoryItems = LayoutInflater.from(parent.getContext()).inflate(R.layout.buttomactiv, null);// дизайн можно скопировать
         // create ViewHolder
         return new categoryVew(categoryItems);//с какими элементами работаем
-
 
 
     }
@@ -54,41 +56,33 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.catego
     public void onBindViewHolder(@NonNull categoryVew holder, @SuppressLint("RecyclerView") int position) {
 
 
-        HomeFragment homeFragment = new HomeFragment();
-
         holder.CattextView.setText(category.get(position).getTitle());
 
 
-        holder.card_pertanyaan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-               // mListener.onFragment1DataListener(category.get(position).getTitle());
-
-
-                homeFragment.showCategoryByActivity(category.get(position).getTitle());
-                //  new HomeFragment().showCategoryByActivity(category.get(position).getId());
-
-               // HomeFragment.MyCallbacktwo.onCallbacktwo(category.get(position).getTitle());
-                //answerText.setText(category.get(position).getTitle());
-                //------------------------------------------------------------------------------
-               // homeFragment.getParentFragment().getView().findViewById(R.id.answerText);
-
-                //new HomeFragment().getActivity().getSupportFragmentManager().findFragmentById(R.id.answerText);
-               // new HomeFragment().getParentFragment().getView().findViewById(R.id.answerText);
-               // holder.answerText.setText(category.get(position).getTitle());
-
-
-             //   holder.answerText.setText(category.get(position).getTitle());
-
-                System.out.println(category.get(position).getTitle() + " - " + category.get(position).getId());
-
-
-
-            }
-        });
+        holder.card_pertanyaan.setOnClickListener(
+                v -> {
+                    mCallback.onCategoryClicked(category.get(position).getTitle());
+                    //    // mListener.onFragment1DataListener(category.get(position).getTitle());
+                    //
+                    //
+                    //     // homeFragment.showCategoryByActivity(category.get(position).getTitle());
+                    //     //  new HomeFragment().showCategoryByActivity(category.get(position).getId());
+                    //
+                    //    // HomeFragment.MyCallbacktwo.onCallbacktwo(category.get(position).getTitle());
+                    //     //answerText.setText(category.get(position).getTitle());
+                    //     //------------------------------------------------------------------------------
+                    //    // homeFragment.getParentFragment().getView().findViewById(R.id.answerText);
+                    //
+                    //     //new HomeFragment().getActivity().getSupportFragmentManager().findFragmentById(R.id.answerText);
+                    //    // new HomeFragment().getParentFragment().getView().findViewById(R.id.answerText);
+                    //    // holder.answerText.setText(category.get(position).getTitle());
+                    //
+                    //
+                    //  //   holder.answerText.setText(category.get(position).getTitle());
+                    //
+                    System.out.println(category.get(position).getTitle() + " - " + category.get(position).getId());
+                });
+    }
 
       /*  viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,8 +99,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.catego
             }                                   //category.get(position).getId() получаем Id каждого курса, из списка(список пронумерован 123 берём число это и есть id)
 
         });*/
-
-    }
 
     @Override
     public int getItemCount() {

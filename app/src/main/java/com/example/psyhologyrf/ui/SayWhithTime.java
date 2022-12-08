@@ -39,7 +39,7 @@ public class SayWhithTime {
             keyId.setBackgroundResource(R.drawable.ic_gradientevning_01);
         }else if(CurrentTime().equals("Доброй ночи")){
             keyId.setBackgroundResource(R.drawable.ic_gradientnight_01_01);
-        }else {keyId.setBackgroundResource(R.drawable.fon);}
+        }else {keyId.setBackgroundResource(R.drawable.ic_gradientday_01);}
 
 
 
